@@ -1,0 +1,80 @@
+---
+title: "Tooth Growth"
+author: "hoaihuongbk"
+date: "June 26, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, results=FALSE, echo=FALSE}
+# Global settings
+Sys.setlocale(category = 'LC_ALL','en_US.UTF-8')
+```
+
+## Overview
+We will use ToothGrowth in dataset package for exploring data analyses, use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
+
+## Preparation data
+```{r}
+library(datasets)
+data("ToothGrowth")
+str(ToothGrowth)
+```
+
+
+## Basic summary
+```{r}
+summary(ToothGrowth)
+table(ToothGrowth$supp,ToothGrowth$dose)
+```
+
+## Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. 
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+g <- ggplot(ToothGrowth, aes(x=factor(dose), y=len, fill=factor(dose))) +
+        geom_boxplot() +
+        facet_grid(.~supp) +
+        labs(title="Tooth Length vs. Dose for OJ & VC", x="Dose", y="Tooth Length")
+g
+```
+
+The confidence intervals for the difference in means provide a range of likely values for ($\mu_1-\mu_2$). It is important to note that all values in the confidence interval are equally likely estimates of the true value of ($\mu_1-\mu_2$). If there is no difference between the population means, then the difference will be zero ($\mu_1-\mu_2 = 0$). Zero is the null value of the parameter (in this case the difference in means). If a 95% confidence interval includes the null value, then there is no statistically meaningful or statistically significant difference between the groups. If the confidence interval does not include the null value, then we conclude that there is a statistically significant difference between the groups.
+
+### Dose 0.5
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+OJ_0.5 <- ToothGrowth %>% filter(supp == "OJ" & dose == 0.5)
+VC_0.5 <- ToothGrowth %>% filter(supp == "VC" & dose == 0.5)
+t.test(OJ_0.5$len, VC_0.5$len)
+```
+
+95% confidence that limits from 1.719057 to 8.780943 does not contain zero, this confidence interval suggests that two population means are not equal.
+
+### Dose 1
+```{r message=FALSE, warning=FALSE}
+OJ_1 <- ToothGrowth %>% filter(supp == "OJ" & dose == 1)
+VC_1 <- ToothGrowth %>% filter(supp == "VC" & dose == 1)
+t.test(OJ_1$len, VC_1$len)
+```
+
+95% confident that the limits from 2.802148 to 9.057852 does not contain zero, this confidence interval also suggests that two population means are not equal.
+
+### Dose 2
+```{r message=FALSE, warning=FALSE}
+OJ_2 <- ToothGrowth %>% filter(supp == "OJ" & dose == 2)
+VC_2 <- ToothGrowth %>% filter(supp == "VC" & dose == 2)
+t.test(OJ_2$len, VC_2$len)
+```
+
+95% confident that the limits from -3.79807 to 3.63807 contain zero, this confidence interval suggests that it is very possible two population means are equal.
+
+## State your conclusions and the assumptions needed for your conclusions
+There are 95% confidence that dose 0.5 and dose 1 of OJ result in longer tooth length than dose 0.5 and dose 1 of VC. With highest dose of 2, there is no statistically significant difference between the effects of OJ and VC.
+
+## Appendix
+Source code: [https://github.com/hoaihuongbk/Statistical_Inference](https://github.com/hoaihuongbk/Statistical_Inference)
+
+
