@@ -1,4 +1,4 @@
-# Statistical_Inference
+# Statistical Inference Course Project
 
 The project consists of two parts:
 1. A simulation exercise.

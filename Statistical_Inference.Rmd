@@ -74,4 +74,5 @@ Due to the Central Limit Theorem: "*The Central Limit Theorem (CLT) is a statist
 
 The figures above shows the density computed using the histogram and the normal density plotted with theoretical mean and variance values follow normal distribution. 
 
-
+## Appendix
+Source code: [https://github.com/hoaihuongbk/Statistical_Inference](https://github.com/hoaihuongbk/Statistical_Inference)
